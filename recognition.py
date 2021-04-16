@@ -4,14 +4,16 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import Normalizer
 from sklearn.svm import SVC
 import tensorflow
+import argparse
+from pathlib import Path
 
 from embedding import get_embedding
 from detect import extract_face
 
 def recognise(image, model):
-    data = load('project_8th_sem.npz')
+    data = load('/content/face-recognition_attendance/files/8th_sem_data.npz')
     testX_faces = data['arr_2']
-    data = load('8th_sem-faces-embeddings.npz')
+    data = load('/content/face-recognition_attendance/files/8th_sem-faces-embeddings.npz')
     trainX, trainy, testX, testy = data['arr_0'], data['arr_1'], data['arr_2'], data['arr_3']
     
     in_encoder = Normalizer(norm='l2')
@@ -33,6 +35,9 @@ def recognise(image, model):
     print('Predicted: ', predict_names[0])
     
 if __name__ == "__main__":
-    model = tensorflow.keras.models.load_model('model\\facenet_keras.h5')
-    image = "data\\val\\1728079\\frame735.jpg"
+    model = tensorflow.keras.models.load_model('/content/facenet_keras.h5')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file_path", type=Path)
+    p = parser.parse_args()
+    image = p.file_path
     recognise(image, model)

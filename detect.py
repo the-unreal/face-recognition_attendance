@@ -42,6 +42,7 @@ def load_dataset(directory):
 		y.extend(labels)
 	return asarray(X), asarray(y)
 
-trainX, trainy = load_dataset('data\\train')
-testX, testy = load_dataset('data\\val')
-savez_compressed('8th_sem_data.npz', trainX, trainy, testX, testy)
+if __name__ == "__main__":
+  trainX, trainy = load_dataset('data\\train')
+  testX, testy = load_dataset('data\\val')
+  savez_compressed('8th_sem_data.npz', trainX, trainy, testX, testy)
